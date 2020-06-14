@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Drum kit</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <style>
+            body{
+                box-sizing: border-box;
+                background-image: url("https://media.istockphoto.com/photos/audience-listens-to-the-lecturer-at-the-conference-picture-id974238866?k=6&m=974238866&s=612x612&w=0&h=9uHJlbOJZJ5z2_cJkB8xEsrJKSbkGxr-tnC-Ss7xDf4=");
+                background-size: cover;
+                background-repeat: no-repeat; 
+                background-attachment: fixed;
+            }
+            .keys {
+                margin-top:10%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                backdrop-filter: blur(0.5rem);
+            }
+            .key{
+                border: 1px solid black;
+                
+                margin: 5px;
+                font-size: 45px;
+                text-align: center;
+                padding: 5px;
+                color: white;
+                flex-grow: 1;
+                background-color: rgba(0, 0, 0, 0.4);
+                transition: all 0.07s;
+            }
+            .key h3{
+                font-size: 14px;
+                color: #CC7722;
+            }
+            .playing{
+                transform: scale(1.1);
+                border-color: #ffc600;
+                box-shadow: 0 0 5px #ffc600;
+            }
+        </style>
+    </head>
+    <body>
+        <div class = "keys">
+            <div data-key= "65" class="key"><kbd>A</kbd><h3 class="sound">Drum</h3></div>
+            <div data-key= "83" class="key"><kbd>S</kbd><h3 class="sound">Jazz</h3></div>
+            <div data-key= "68" class="key"><kbd>D</kbd><h3 class="sound">Beat</h3></div>
+            <div data-key= "70" class="key"><kbd>F</kbd><h3 class="sound">Hit</h3></div>
+            <div data-key= "71" class="key"><kbd>G</kbd><h3 class="sound">Chord</h3></div>
+            <div data-key= "72" class="key"><kbd>H</kbd><h3 class="sound">Drum</h3></div>
+            <div data-key= "74" class="key"><kbd>J</kbd><h3 class="sound">Hit</h3></div>
+            <div data-key= "75" class="key"><kbd>K</kbd><h3 class="sound">Drum</h3></div>
+            <div data-key= "76" class="key"><kbd>L</kbd><h3 class="sound">Drum</h3></div>
+        </div>
+        <audio data-key="65" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"></audio>
+        <audio data-key="83" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3"></audio>
+        <audio data-key="68" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3"></audio>
+        <audio data-key="70" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3"></audio>
+        <audio data-key="71" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3"></audio>
+        <audio data-key="72" src="https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3"></audio>
+        <audio data-key="74" src="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"></audio>
+        <audio data-key="75" src="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3"></audio>
+        <audio data-key="76" src="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3"></audio>
+       
+        
+        <script>
+            function playSound(e){
+                const audio = document.querySelector(`audio[data-key = "${e.keyCode}"]`);
+                const key = document.querySelector(`.key[data-key = "${e.keyCode}"]`);
+                if(!audio) return;//stop function from running all together
+                audio.currentTime = 0;//rewind
+                audio.play();
+                key.classList.add('playing');
+                
+            }
+            const keys = document.querySelectorAll('.key');
+            keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+            function removeTransition(e){
+                if(e.propertyName !== 'transform')
+                return;
+                this.classList.remove('playing');
+            }
+            window.addEventListener("keydown",playSound);
+        </script>
+    </body>
+</html>
